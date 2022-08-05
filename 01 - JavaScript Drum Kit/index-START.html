@@ -7,7 +7,7 @@
 </head>
 <body>
 
-
+  <!--Each key has a standard keycode assigned to it, from all letter to escape-->
   <div class="keys">
     <div data-key="65" class="key">
       <kbd>A</kbd>
@@ -47,6 +47,9 @@
     </div>
   </div>
 
+
+  <!--With js verify the keycode of the keystroke and play the correct audio file-->
+  <!--data attributes (like data-key) when creating your own attributes use the form data-name-->
   <audio data-key="65" src="sounds/clap.wav"></audio>
   <audio data-key="83" src="sounds/hihat.wav"></audio>
   <audio data-key="68" src="sounds/kick.wav"></audio>
@@ -58,6 +61,42 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+//When a key stroke is input, find and play the correct audio file, find and alter the class of the correspondent div to animate the key
+
+//Listening for the key up event
+window.addEventListener('keydown',(e)=>{
+
+  //Shorter version, the query selector grabs only the required element, so no iteration needed.
+  const audioFile=document.querySelector(`audio[data-key="${e.keyCode}"]`);
+  //Retrieving div for animation. Function looks for div with class key and the data-key variable.
+  const key=document.querySelector(`.key[data-key="${e.keyCode}"]`);
+  //Sound plays
+  if(!audioFile) return; //stops function from running if no audio attached to keypress
+  audioFile.currentTime=0; //Line rewinds the play back for quick rettrigering
+  audioFile.play();
+  key.classList.add('playing');
+
+  //Longer versions I made, grabs the whole audio nodelist and iterates over it.
+  /*
+  const audioFiles=document.querySelectorAll('audio');
+  audioFiles.forEach(audio=>e.keyCode==audio.getAttribute('data-key')?audio.play():console.log());
+  */
+
+  /* An even longer version with no arrow functions.
+  audioFiles.forEach((audio)=>{
+    if(e.keyCode==audio.getAttribute('data-key')){
+      audio.play();
+    } else return;
+  });
+  */
+ });
+ // transitioning back once key as been pressed and sound made
+ const keys=document.querySelectorAll('.key');
+ keys.forEach(key=> key.addEventListener('transitionend',(e)=>{
+  //A number of transitions take place. We grab 'transform' since is the longest to complete by its css statement - 0.7s. Once 'transform' has finished then we can move back
+  if(e.propertyName !== 'transform') return; 
+  key.classList.remove('playing');
+ }))
 
 </script>
 

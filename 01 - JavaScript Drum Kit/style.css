@@ -24,6 +24,7 @@ body,html {
   margin: 1rem;
   font-size: 1.5rem;
   padding: 1rem .5rem;
+  /*The transition parameter dictates how the animation between two css states works*/
   transition: all .07s ease;
   width: 10rem;
   text-align: center;
@@ -32,6 +33,9 @@ body,html {
   text-shadow: 0 0 .5rem black;
 }
 
+/*
+Class "playing" is added through a js scrip. Applying the css to the html
+*/
 .playing {
   transform: scale(1.1);
   border-color: #ffc600;
