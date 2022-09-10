@@ -37,29 +37,77 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    // Filters based on a conditional with a boolean return (true of false)
+    // The short form conditional returns True even though is not specified
+    const filtered=inventors.filter(inventor=>inventor.year<1600 && inventor.year>=1500)
+    console.table(filtered)
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    // Returns the same amount of elements as the input array
+    // Analog to a factory it applies a certain procces to every item in the array before returning it
+      const mapped=inventors.map(inventor=>inventor.first + ' ' + inventor.last)
+      console.table(mapped)
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    // Sort the array based on a condition to sort a pair of elemnts inside the array
+    // The condition needs to retunr a 1 or -1 to know how to sort a pair of elements.
+    const sorted=inventors.sort((a,b)=>a.year>b.year? -1:1)
+    console.table(sorted)
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    // Works like running over the array and adding a variable present in the array
+    // array.reduce(function,initialValue)
+    
+    const totalYears=inventors.reduce((total,inventor)=>{
+      return total+(inventor.passed-inventor.year)
+    },0)
+    console.log(totalYears)
 
     // 5. Sort the inventors by years lived
+    const oldest=inventors.sort((a,b)=>(a.passed-a.year)<(b.passed-b.year)?1:-1)
+    console.table(oldest)
+
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+    // const category=document.querySelector('.mw-category');
+    // const links=[...category.querySelectorAll('a')];
+    // const de=links
+    //               .map(link=>link.textContent)
+    //               .filter(link=>link.includes('de'))
+
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const alpha=people.sort((a,b)=>{
+      const parts=a.split(', ') //Returns an array split at the given character
+      const [aLastName,aFirstName]=parts //De-structure the array
+      const bLastName=b.split(', ')[0]
+      return aLastName>bLastName?1:-1
+    })
+    console.table(alpha)
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
 
+    const reducedTrans=data.reduce((obj,item)=>{
+      if (!obj[item]){
+        obj[item]=0
+      }
+      obj[item]++
+      return obj
+    },{})
+    // Creates an empty object that stores each data as keys and counters as the values.
+    // Returns the object.
+    // The object could've been initialized with zeroes for every key, if all the keys are known. This would remove the need for an if statement inside the function since all the vales are already initialized.
+
+    // data.reduce((obj,item)=>{obj[item]++; return obj},{car:0,truck:0,bike:0,walk:0,van:0})
+    console.log(reducedTrans)
   </script>
 </body>
 </html>
